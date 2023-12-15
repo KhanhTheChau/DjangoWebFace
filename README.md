@@ -15,7 +15,7 @@
 <ol>
      <li>User can search and view profile of other users.</li>
      <li>They can share their uploaded files with any of those users.</li>
-     <li>Users can see the shared files by other users also in uploaded files.</li>
+     <li>Users can also view files shared by other users in uploaded files.</li>
 </ol>
 
 <h4>Part 3:</h4>
@@ -112,19 +112,20 @@ Password (again): ******
 
 ### 3. Update Database
 Run the Python script: ```python manage.py shell```
+
 Importing a library: 
 ```bash
 from django.contrib.auth.models import User
 from blog.models import Post  
 ```
 
-Displaying all users in the database:
+Display all users in the database:
 ```bash
 all_users = User.objects.all()
 print(all_users)
 ```
 
-Displaying all posts in the database:
+Display all posts in the database:
 ```bash
 all_posts = Post.objects.all()
 print(all_posts)
@@ -146,7 +147,7 @@ post = Post(
 )
 ```
 
-Save the record to the database: ```post.save()```
+Save the record to the database: ```bash post.save()```
 
 Display all users and posts after adding:
 ```bash
@@ -154,10 +155,10 @@ print(User.objects.all())
 print(Post.objects.all())
 ```
 
-# Screenshots : 
+## III. Screenshots : 
 <img src="Screenshots/author.png" height="400" width="800">
-<img src="Screenshots/home.png" height="400" width="800">
-<img src="Screenshots/login.png" height="400" width="800">
-<img src="Screenshots/mypost.png" height="400" width="800">
 <img src="Screenshots/post.png" height="400" width="800">
+<img src="Screenshots/home.png" height="400" width="800">
+<img src="Screenshots/mypost.png" height="400" width="800">
 <img src="Screenshots/Register.png" height="400" width="800">
+<img src="Screenshots/login.png" height="400" width="800">
