@@ -2,7 +2,7 @@
 ## By Chau The Khanh 
 
 
-## Feature
+## Features
 
 <h4>Part 1:</h4>
 <ol>
@@ -100,3 +100,64 @@ It starts development server at `http://127.0.0.1:8080/` or `http://localhost:80
 cd DjangoWebFace
 python manage.py startapp users
 ```
+
+### 2. Create user admin
+Run the Python script: ```python manage.py createsuperuser```
+```bash
+Username (leave blank to use 'your_computer_username'): your_name_user
+Email address: xxxx@gmail.com
+Password: ******
+Password (again): ******
+```
+
+### 3. Update Database
+Run the Python script: ```python manage.py shell```
+Importing a library: 
+```bash
+from django.contrib.auth.models import User
+from blog.models import Post  
+```
+
+Displaying all users in the database:
+```bash
+all_users = User.objects.all()
+print(all_users)
+```
+
+Displaying all posts in the database:
+```bash
+all_posts = Post.objects.all()
+print(all_posts)
+```
+
+Find or create a new user:
+```bash
+user, created = User.objects.get_or_create(username='your_username', defaults={'password': 'your_password'})
+print(f"User created: {created}")
+```
+
+Create a new record:
+```bash
+post = Post(
+    title='Your Post Title',
+    file='path/to/your/file.txt',
+    content='Your post content.',
+    author=user
+)
+```
+
+Save the record to the database: ```post.save()```
+
+Display all users and posts after adding:
+```bash
+print(User.objects.all())
+print(Post.objects.all())
+```
+
+# Screenshots : 
+<img src="Screenshots/author.png" height="400" width="800">
+<img src="Screenshots/home.png" height="400" width="800">
+<img src="Screenshots/login.png" height="400" width="800">
+<img src="Screenshots/mypost.png" height="400" width="800">
+<img src="Screenshots/post.png" height="400" width="800">
+<img src="Screenshots/Register.png" height="400" width="800">
