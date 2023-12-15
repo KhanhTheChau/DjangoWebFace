@@ -1,0 +1,82 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% for post in posts %}
+      <div class="jumbotron mt-3 bg-white shadow-lg">
+      <!--Mỗi bài đăng được bao bọc trong một jumbotron. jumbotron là một thành phần Bootstrap thường được sử dụng để hiển thị các thông tin quan trọng. Các class khác như mt-3, bg-white, và shadow-lg được sử dụng để thêm các hiệu ứng kiểu dáng.-->
+      
+      <article class="media content-section shadow">
+      <!--khai báo một phần tử article với class media, content-section, và shadow. Các class này có thể được sử dụng để thiết kế và định dạng bài đăng.-->
+
+        <a href="{{ post.author.profile.image.url }} " target="_blank"> <img src="{{ post.author.profile.image.url }}  " alt="" class="article-img rounded-circle img-thumbnail img-fluid shadow"></a>
+        <!--Một liên kết (<a>) được tạo để hiển thị hình ảnh của tác giả. {{ post.author.profile.image.url }} trích xuất URL của hình ảnh từ trường hình ảnh trong thông tin tác giả.
+            Một thẻ hình ảnh (<img>) được sử dụng để hiển thị hình ảnh của tác giả. src="{{ post.author.profile.image.url }}" xác định nguồn của hình ảnh từ URL trước đó. Các class như rounded-circle, img-thumbnail, img-fluid, và shadow được sử dụng để định dạng hình ảnh.-->
+        
+        <div class="media-body">
+          <div class="article-metadata d-flex justify-content-between">
+          <!--Một div chứa các thông tin liên quan đến bài đăng, được định dạng để sử dụng flexbox (d-flex) để căn giữa nó và giữa các phần tử con của nó (justify-content-between).-->
+          
+             <a class="mr-2 " href="{% url 'user-posts' post.author.username  %}"><h3>{{ post.author }}</h3></a>
+             <!--Một liên kết được tạo để điều hướng đến trang hiển thị tất cả bài đăng của một người dùng cụ thể. href="{% url 'user-posts' post.author.username %}" xác định URL của liên kết dựa trên tên định danh của người dùng (post.author.username). Một tiêu đề h3 (<h3>) được sử dụng để hiển thị tên của tác giả ({{ post.author }}).-->
+              
+              <small class="text-muted">{{ post.date_upload|date:"F d, Y" }}</small>
+              <!--Một phần tử small được sử dụng để hiển thị thời gian đăng của bài đăng. text-muted là một class Bootstrap được sử dụng để làm cho văn bản có màu xám nhạt. {{ post.date_upload|date:"F d, Y" }} trích xuất thời gian đăng của bài đăng và định dạng nó theo định dạng "Tháng ngày, Năm".--> 
+          </div>
+          {% comment %} {% if post.file %}
+          <a href="{{ post.file.url }}"  download class="text-dark text-justify "><h5>{{ post.blog }}</h5></a>
+          {% endif %}  {% endcomment %}
+     
+      
+          <!--Hiển thị tiêu đề của bài đăng dưới dạng một liên kết (<a>) có đường dẫn đến trang chi tiết bài đăng. Đường dẫn này được tạo bằng cách sử dụng templatetag {% url 'post-detail' post.id %}.-->
+          <h2><a class="article-title text-justify " href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2> 
+          
+          <div class="d-flex justify-content-between">
+
+              <p class="article-content text-justify text-truncate overflow-hidden">{{ post.content }}</p>
+              <!--Hiển thị nội dung của bài đăng dưới dạng đoạn văn bản. Nếu nội dung quá dài, nó sẽ được cắt bớt và hiển thị một số lượng giới hạn (text-truncate và overflow-hidden giúp làm điều này).-->
+              
+              <!--Kiểm tra xem bài đăng có đính kèm tệp đính kèm hay không (post.file).-->
+              {% if post.file %}
+              
+                
+                <!--Nếu có, hiển thị một nút "Download" (<a>) với đường dẫn đến tệp đính kèm ({{ post.file.url }}) và thuộc tính download để bảo đảm rằng khi người dùng nhấn vào nó, tệp sẽ được tải về thay vì mở nó trong trình duyệt.-->
+                <div class="form-group mt-0 pt-0  m-2">          
+                  <a class="btn btn-outline-primary  btn-d "  href="{{ post.file.url }}"  download type="submit"><i class="fas fa-download"></i></a>
+                </div>
+              
+              {% endif %}
+        
+          </div> 
+      
+        </div>
+
+      </article>
+
+      </div>   
+    {% endfor %}
+
+
+    {% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+          <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if page_obj.has_next %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+    {% endif %} 
+    
+{% endblock content %} 

@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %} 
+{% load crispy_forms_tags %}
+<!--Dòng này sử dụng templatetag crispy_forms_tags để load Crispy Forms, một ứng dụng Django để làm cho biểu mẫu trở nên dễ đọc và hiển thị một cách chuyên nghiệp hơn.-->
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <!--Dòng này thêm một token bảo vệ CSRF vào biểu mẫu. Điều này là quan trọng để bảo vệ ứng dụng của bạn khỏi tấn công CSRF-->
+            
+            <!--Một fieldset được sử dụng để nhóm các phần tử của biểu mẫu lại với nhau và tạo ra đường viền xung quanh nó.-->
+            <fieldset class="form-group">
+                <!--legend là một tiêu đề cho fieldset-->
+                <legend class="border-bottom mb-4">Log In</legend>
+                {{ form|crispy }}
+                <!--{{ form|crispy }} sử dụng Crispy Forms để hiển thị biểu mẫu một cách đẹp và dễ đọc.-->
+            </fieldset>
+
+            <!--Một nút submit được thêm vào để người dùng có thể gửi thông tin đăng nhập-->
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Login</button>
+            </div>
+
+        </form>
+
+
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+            </small>
+        </div>
+
+        
+    </div>
+
+{% endblock content %} 
+

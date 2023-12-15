@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section pt-2 mt-3 shadow-lg"  >
+
+        <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+            <!--Sử dụng <fieldset> để nhóm các trường của biểu mẫu với một tiêu đề (legend).-->
+            <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">
+                        Post
+                    </legend>
+
+                    <!--{{ form|crispy }} sử dụng Crispy Forms để hiển thị biểu mẫu một cách đẹp và dễ đọc.-->
+                    {{ form|crispy }}
+
+            </fieldset>
+
+            <div class="form-group">                  
+                  <button class="btn btn-outline-primary" type="submit"><i class="fas fa-upload"></i> Upload</button>
+            </div>
+          
+        </form>
+         
+    </div>
+{% endblock content %} 

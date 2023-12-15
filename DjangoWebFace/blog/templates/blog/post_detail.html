@@ -1,0 +1,97 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="jumbotron mt-3 shadow-lg">
+  <article class="media content-section shadow ">
+    <!-- tạo một liên kết đến ảnh cá nhân của người đăng bài (author). href chứa đường dẫn đến ảnh cá nhân.-->
+    <a href="{{ object.author.profile.image.url }} " target="_blank"> <img src="{{ object.author.profile.image.url }}  " alt="" class="article-img rounded-circle img-thumbnail img-fluid"></a>
+    <!--  thẻ <img> (hình ảnh) để hiển thị ảnh cá nhân của người đăng bài.
+          alt="": Văn bản thay thế được đặt là rỗng (alt=""). Thuộc tính này thường được sử dụng để mô tả nếu hình ảnh không thể hiển thị.
+          class="article-img rounded-circle img-thumbnail img-fluid": Các lớp CSS được áp dụng để định dạng hình ảnh. Trong trường hợp này:
+          article-img: Định dạng chung cho hình ảnh trong bài viết.
+          rounded-circle: Làm tròn các góc của hình ảnh, tạo hiệu ứng hình tròn.
+          img-thumbnail: Hiển thị hình ảnh nhỏ hơn và có đường viền xám xung quanh.
+          img-fluid: Hình ảnh sẽ linh hoạt theo kích thước của container cha mà nó nằm trong, giúp hình ảnh tự động thích ứng với kích thước màn hình.-->
+              
+    <div class="media-body">
+        <div class="">
+
+            <div class="d-flex justify-content-between">
+              <!--Đây là một container <div> được thiết lập để sử dụng Flexbox (d-flex) và đặt kiểu căn chỉnh giữa các thành phần con với thuộc tính justify-content-between. Các thành phần con bên trong sẽ được căn chỉnh theo chiều ngang và đặt ở hai đầu của container.-->
+                
+                <a class="mr-2 mt-0 mb-0  text-dark" href="{% url 'user-posts' object.author.username  %}"><h3>{{ object.author }}</h3></a> <!--ạo một liên kết đến trang danh sách bài đăng của một người dùng cụ thể-->
+                <!--mr-2: Margin phải có giá trị là 2 (có thể thay đổi giá trị tùy thuộc vào khoảng cách mong muốn).
+                    mt-0 mb-0: Margin trên và margin dưới có giá trị là 0 để loại bỏ khoảng trắng thừa.
+                    text-dark: Màu chữ là màu đen.-->
+                <small class="text-muted  text-align-right">{{ object.date_upload }}</small> <!--thẻ <small> để hiển thị thời gian tải lên bài đăng-->
+                <!--class="text-muted text-align-right": Các lớp CSS được áp dụng để định dạng văn bản.
+                    text-muted: Màu chữ được làm mờ, thường được sử dụng để chỉ văn bản không quan trọng.
+                    text-align-right: Căn chỉnh văn bản về phải.-->
+            </div>
+
+            <!--kiểm tra xem người đăng bài (object.author) có khác với người dùng hiện tại (user) hay không-->
+            {% if object.author != user %}
+              <!-- Đây là một container <div> được thiết lập để sử dụng Flexbox (d-flex) và đặt kiểu căn chỉnh giữa các thành phần con với thuộc tính justify-content-end. Các thành phần con bên trong sẽ được căn chỉnh về phía cuối bên phải của container.-->
+              <div class="form-group mt-0 pt-0 d-flex justify-content-end">          
+                <a href="{{ object.file.url }}" download class="btn btn-primary flex-last" type="submit"><i class="fas fa-download"></i> Downlaod</a>
+                <!--download: Thuộc tính này chỉ định rằng khi liên kết được nhấp, tệp sẽ được tải xuống thay vì mở trong trình duyệt.
+                    class="btn btn-primary flex-last": Các lớp CSS được áp dụng để định dạng liên kết.
+                    btn: Xác định liên kết như một nút.
+                    btn-primary: Màu nền của nút là màu chủ đạo của chủ đề.
+                    flex-last: Đặt phần tử ở cuối container khi sử dụng Flexbox.-->
+              
+              </div>
+
+            {% endif %}
+
+            <hr>
+
+            {% if object.author == user %}
+              <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                
+                <!--btn: Xác định liên kết như một nút.
+                    btn-secondary: Màu nền của nút là màu phụ của chủ đề.
+                    btn-sm: Xác định kích thước của nút là nhỏ (small).
+                    mt-1 mb-1: Margin trên và margin dưới có giá trị là 1 để thêm khoảng trắng giữa nút và các phần khác.-->
+              
+              </div>
+            {% endif %}
+
+        </div>
+    <div>
+
+        <!--Kiểm tra xem đối tượng có file đính kèm không-->
+        {% if object.file %}
+            {% if object.extension == '.jpg' or object.extension == 'jpeg' or object.extension == 'png' %}
+              <!--hiển thị một hình ảnh được nhúng và một liên kết để tải xuống.-->
+              <a href="{{ object.file.url }}"  download ><img src="{{ object.file.url }}" alt="" class="img-fluid "></a>
+              <a href="{{ object.file.url }}"  download class="text-dark"><h5>{{ object.file }}</h5></a>
+            
+
+            {% elif object.extension == '.mp4' %}
+              <!--hiển thị một video nhúng và một liên kết để tải xuống.-->
+              <div class="embed-responsive embed-responsive-16by9"> <!--Container để giữ video với tỷ lệ khung hình là 16:9.-->
+                <video id="video-1_html_api" class="vjs-tech" preload="auto" autoplay > <!--Thẻ video HTML5 với một số thuộc tính như tự động phát và tải trước tự động.-->
+                  <source src="{{ object.file.url }}" type="video/mp4" class="embed-responsive"> <!--Nguồn video với định dạng MP4 để phát trong container nhúng.-->
+                </video>
+              </div>
+
+              <!--Liên kết văn bản để tải xuống file video.-->
+              <a href="{{ object.file.url }}"  download class="text-dark"><h5>{{ object.file }}</h5></a>
+            
+            {% else %}
+              <a href="{{ object.file.url }}"  download class="text-dark"><h5>{{ object.file }}</h5></a>
+            
+            {% endif %}
+        {% endif %}
+
+
+      </div>
+          <h2>{{ object.title }}</h2>
+          <p class="article-content">{{ object.content }}</p>
+      </div>
+
+
+  </article>
+{% endblock content %} 

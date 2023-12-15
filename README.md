@@ -6,7 +6,7 @@
 
 <h4>Part 1:</h4>
 <ol>
-    <li>Create a web-app where a user can login.</li>
+    <li>Create a web-app where a user can login and logout.</li>
     <li>User can upload files.</li>
     <li>User can view his/her uploaded files.</li>
 </ol>
@@ -18,11 +18,21 @@
      <li>Users can see the shared files by other users also in uploaded files.</li>
 </ol>
 
+<h4>Part 3:</h4>
+<h5>Admin</h5>
+<ol>
+    <li>There is only one admin</li>
+    <li>Viewing the status of accounts.</li>
+    <li>The server can delete posts from anyone.</li>
+    <li>The server can update the profile of anyone.</li>
+    
+</ol>
+
 <h4>Additional Features:</h4>
 <ol>
     <li>In users profile user can set his/her profile picture.</li>
     <li>Users can download other users uploaded files.</li>
-    <li>The user can upload any type of files such as images, videos, text files and also different types of programs like python code, java code, etc.</li>
+    <li>The user can upload any type of files such as images, videos, text files (exe, txt, ...) and also different types of programs like python code, java code, etc.</li>
 </ol>
     
 ## Technologies Used:
@@ -84,3 +94,9 @@ python manage.py runserver 8080
 ```
 It starts development server at `http://127.0.0.1:8080/` or `http://localhost:8080/`.
 
+## II. Advanced setup
+### 1. Setup new Django app for users
+```bash
+cd DjangoWebFace
+python manage.py startapp users
+```

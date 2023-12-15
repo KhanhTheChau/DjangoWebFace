@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <p>Posts containing '{{query_string}}'</p> 
+    
+    {% for post in posts %}
+
+        <div>
+            <span> {{ post.created }} </span> <!--Hiển thị thời gian tạo bài đăng -->
+            <a href="{% url 'post_detail' slug=post.slug %}"><h2 class="page-title">{{ post.title }}</h2></a>
+            <!--Tiêu đề bài đăng là một liên kết (<a>) có đường dẫn đến trang chi tiết bài đăng ({% url 'post_detail' slug=post.slug %}).-->
+            
+                
+            <!--Nội dung bài đăng ({{ post.body|safe }}) được hiển thị trong một thẻ <div>. Lưu ý: |safe được sử dụng để bảo vệ khỏi việc tự động chuyển đổi HTML entities và cho phép HTML được hiển thị mà không bị giảm giá trị.-->
+            <div class="post">
+                {{ post.body|safe }}
+            </div>
+
+        </div>
+
+    {% endfor %}
+{% endblock content %}

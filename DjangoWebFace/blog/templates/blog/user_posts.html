@@ -1,0 +1,61 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <!--Hiển thị tiêu đề danh sách bài đăng của người dùng, bao gồm tên người dùng ({{ view.kwargs.username }}) và tổng số bài đăng ({{ page_obj.paginator.count }})-->
+    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    
+    {% for post in posts %}
+
+        <article class="media content-section">
+          <!--hình ảnh của tác giả (người đăng bài) hiển thị bằng <img>-->
+          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+          
+          <!--thông tin chi tiết bài đăng được hiển thị bằng các thẻ <div>.-->
+          <div class="media-body">
+            
+            <div class="article-metadata">
+              <!--Tên người đăng bài ({{ post.author }}), thời gian đăng bài ({{ post.date_posted|date:"F d, Y" }}), tiêu đề bài đăng ({{ post.title }}), và nội dung bài đăng ({{ post.content }}) được hiển thị.-->
+              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+            
+            </div>
+            
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          
+          </div>
+        </article>
+
+    {% endfor %}
+
+
+    <!--tạo thanh điều hướng phân trang cho danh sách các bài đăng-->
+    {% if is_paginated %} <!--Kiểm tra xem danh sách bài đăng có được phân trang hay không.-->
+
+      <!--Nếu có trang trước, hiển thị nút "First" để chuyển đến trang đầu và nút "Previous" để chuyển đến trang trước-->
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        <!--Nếu trang hiện tại (page_obj.number) trùng với số trang đang được lặp, sử dụng nút màu xanh (btn-info), ngược lại sử dụng nút màu trắng với đường viền (btn-outline-info).-->
+        
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        <!--Chỉ hiển thị các trang gần trang hiện tại (num > page_obj.number|add:'-3' and num < page_obj.number|add:'3').-->
+        
+        {% endif %}
+
+      {% endfor %}
+
+      <!--Nếu có trang tiếp theo, hiển thị nút "Next" để chuyển đến trang tiếp theo và nút "Last" để chuyển đến trang cuối cùng.-->
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %} 
+{% endblock content %} 
