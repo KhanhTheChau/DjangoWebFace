@@ -156,6 +156,7 @@ print(Post.objects.all())
 ```
 ## III. Deloy
 Web Deloy: https://www.pythonanywhere.com/
+Youtobe: https://www.youtube.com/watch?v=xtnUwvjOThg
 
 Link Demo App: https://khanhchau567.pythonanywhere.com/
 
