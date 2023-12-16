@@ -156,7 +156,7 @@ print(Post.objects.all())
 ```
 ## III. Deloy
 
-Link Demo: ```https://khanhchau567.pythonanywhere.com/```
+Link Demo: https://khanhchau567.pythonanywhere.com/
 
 ## IV. Screenshots : 
 <img src="Screenshots/author.png" height="400" width="800">
