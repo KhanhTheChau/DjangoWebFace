@@ -154,8 +154,11 @@ Display all users and posts after adding:
 print(User.objects.all())
 print(Post.objects.all())
 ```
+## III. Deloy
 
-## III. Screenshots : 
+Link Demo: ```https://khanhchau567.pythonanywhere.com/```
+
+## IV. Screenshots : 
 <img src="Screenshots/author.png" height="400" width="800">
 <img src="Screenshots/post.png" height="400" width="800">
 <img src="Screenshots/home.png" height="400" width="800">
